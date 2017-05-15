@@ -1,0 +1,68 @@
+swagger: '2.0'
+info:
+  description: 'This is the Rue Serverless Blueprint API in Swagger.You can find out more about Swagger at http://swagger.io'
+  version: 1.0.0
+  title: Rue Serverless Blueprint
+basePath: /api/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /shoe:
+    post:
+      summary: Create a shoe
+      parameters:
+      - name: shoe
+        schema:
+          $ref: '#/definitions/Shoe'
+        in: body
+        required: true
+      responses:
+        '200':
+          description: Id of shoe
+          schema:
+            type: number
+  /shoe/list:
+    post:
+      summary: List shoes
+      responses:
+        '200':
+          description: List shoes
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Shoe'
+  /shoe/{id}:
+    get:
+      summary: Read a shoe by id
+      parameters:
+      - name: id
+        type: string
+        in: path
+        description: Id of the shoe to get
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Shoe'
+        '404':
+          description: Shoe not found
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: x-api-key
+    in: header
+definitions:
+  Shoe:
+    type: object
+    required: [id, color]
+    properties:
+      id:
+        type: integer
+      color:
+        type: string
+        description: Shoe color
